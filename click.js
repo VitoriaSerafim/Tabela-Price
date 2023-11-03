@@ -1,18 +1,17 @@
 // Obtém o botão e o conteúdo
-const toggleButton = document.getElementById('toggleButton');
-const conteudo = document.getElementById('conteudo');
+const submitButton = document.getElementById('submitButton');
+const result = document.getElementById('result');
 
 // Define um estado inicial
-let conteudoVisivel = false;
+let visibilidade = false;
 
 // Adiciona um ouvinte de evento ao botão
-toggleButton.addEventListener('click', function () {
-    if (conteudoVisivel) {
-        conteudo.style.display = 'none'; // Oculta o conteúdo
+submitButton.addEventListener('click', function () {
+    if (visibilidade) {
+        result.style.display = 'none'; // Oculta o conteúdo
     } else {
-        conteudo.style.display = 'block'; // Torna o conteúdo visível
+        result.style.display = 'block'; // Torna o conteúdo visível
     }
-
     // Inverte o estado
-    conteudoVisivel = !conteudoVisivel;
+    visibilidade = !visibilidade;
 });

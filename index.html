@@ -1,249 +1,464 @@
 <!DOCTYPE html>
 <html lang="pt" xml:lang="pt" xmlns="http://www.w3.org/1999/xhtml">
-    <head>
-        <title>CDC</title>
-        <meta charset="utf8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-        <link
-            rel="stylesheet"
-            href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css"
-        />
-        <script src="js-webshim/minified/polyfiller.js"></script>
-        <style type="text/css">
-            .box {
-                background-color: antiquewhite;
-                box-shadow: 8px 8px 6px grey;
-                width: 450px;
-                border-style: solid;
-                border-width: 3px;
-                border-color: lightblue;
-                padding-left: 10px;
-                padding-right: 10px;
-                padding-bottom: 10px;
-                margin-left: 2px;
-            }
-            body {
-                background-color: #f0f0f2;
-                margin: 0;
-                padding: 2em;
-                font-family: -apple-system, system-ui, BlinkMacSystemFont,
-                    "Segoe UI", "Open Sans", "Helvetica Neue", Helvetica, Arial,
-                    sans-serif;
-            }
-            input {
-                margin: 10px 3px 10px 3px;
-                border: 1px solid grey;
-                border-radius: 5px;
-                font-size: 12px;
-                padding: 5px 5px 5px 5px;
-            }
-            label {
-                position: relative;
-                top: 12px;
-                width: 190px;
-                float: left;
-            }
-            #submitButton {
-                width: 80px;
-                margin-left: 20px;
-            }
-            #errorMessage {
-                color: red;
-                font-size: 90% !important;
-            }
-            #successMessage {
-                color: green;
-                font-size: 90% !important;
-                display: block;
-                margin-top: 20px;
-            }
-            .button {
-                font-size: 13px;
-                color: red;
-                background-color: #f8fad7;
-            }
-            .button:hover {
-                background-color: #fadad7;
-            }
-            #draggable {
-                cursor: n-resize;
-            }
-            #cdcfieldset {
-                cursor: move;
-            }
-            input.currency {
-                text-align: left;
-                padding-right: 15px;
-            }
-            .input-group .form-control {
-                float: none;
-            }
-            .input-group .input-buttons {
-                position: relative;
-                z-index: 3;
-            }
-            .messages {
-                text-align: center;
-            }
-        </style>
-    </head>
+  <head>
+    <title>CDC</title>
+    <meta charset="utf8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css"
+    />
+    <script src="js-webshim/minified/polyfiller.js"></script>
+    <style type="text/css">
+      .box {
+        background-color: antiquewhite;
+        box-shadow: 8px 8px 6px grey;
+        width: 450px;
+        border-style: solid;
+        border-width: 3px;
+        border-color: lightblue;
+        padding-left: 10px;
+        padding-right: 10px;
+        padding-bottom: 10px;
+        margin-left: 2px;
+      }
+      body {
+        background-color: #f0f0f2;
+        margin: 0;
+        padding: 2em;
+        font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI",
+          "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+      }
+      input {
+        margin: 10px 3px 10px 3px;
+        border: 1px solid grey;
+        border-radius: 5px;
+        font-size: 12px;
+        padding: 5px 5px 5px 5px;
+      }
+      label {
+        position: relative;
+        top: 12px;
+        width: 190px;
+        float: left;
+      }
+      #submitButton {
+        width: 80px;
+        margin-left: 20px;
+      }
+      #errorMessage {
+        color: red;
+        font-size: 90% !important;
+      }
+      #successMessage {
+        color: green;
+        font-size: 90% !important;
+        display: block;
+        margin-top: 20px;
+      }
+      .button {
+        font-size: 13px;
+        color: red;
+        background-color: #f8fad7;
+      }
+      .button:hover {
+        background-color: #fadad7;
+      }
+      #draggable {
+        cursor: n-resize;
+      }
+      #cdcfieldset {
+        cursor: move;
+      }
+      input.currency {
+        text-align: left;
+        padding-right: 15px;
+      }
+      .input-group .form-control {
+        float: none;
+      }
+      .input-group .input-buttons {
+        position: relative;
+        z-index: 3;
+      }
+      .messages {
+        text-align: center;
+      }
+    </style>
+  </head>
 
-    <body>
-        <fieldset
-            id="cdcfieldset"
-            class="draggable ui-widget-content"
-            style="
-                border: 1px black solid;
-                background-color: #cac3ba;
-                width: 400px;
-            "
-        >
-            <legend
-                style="
-                    border: 5px lightblue solid;
-                    margin-left: 1em;
-                    background-color: #ff6347;
-                    padding: 0.2em 0.8em;
-                "
-            >
-                <strong>Crédito Direto ao Consumidor</strong>
-            </legend>
-            <form action="" method="post">
-                <div class="box">
-                    <span class="input-group-addon" style="color: antiquewhite"
-                        >$</span
-                    >
-                    <label for="parc">Parcelamento:</label>
-                    <input
-                        id="parc"
-                        type="number"
-                        name="np"
-                        size="5"
-                        value="36"
-                        min="1"
-                        max="72000"
-                        step="1"
-                        required
-                    />meses<br />
+  <body>
+    <script src="LCG.js"></script>
+    <fieldset
+      id="cdcfieldset"
+      class="draggable ui-widget-content"
+      style="border: 1px black solid; background-color: #cac3ba; width: 400px"
+    >
+      <legend
+        style="
+          border: 5px lightblue solid;
+          margin-left: 1em;
+          background-color: #ff6347;
+          padding: 0.2em 0.8em;
+        "
+      >
+        <strong>Crédito Direto ao Consumidor</strong>
+      </legend>
+      <form action="" method="post">
+        <div class="box">
+          <span class="input-group-addon" style="color: antiquewhite">$</span>
+          <label for="parc">Parcelamento:</label>
+          <input
+            id="parc"
+            type="number"
+            name="np"
+            size="5"
+            value="36"
+            min="1"
+            max="72000"
+            step="1"
+            required
+          />meses<br />
 
-                    <span class="input-group-addon" style="color: antiquewhite"
-                        >$</span
-                    >
-                    <label for="itax">Taxa de juros:</label>
-                    <input
-                        id="itax"
-                        type="number"
-                        name="tax"
-                        size="10"
-                        value="0.50"
-                        min="0.0"
-                        max="100.0"
-                        step="any"
-                        required
-                    />% mês<br />
+          <span class="input-group-addon" style="color: antiquewhite">$</span>
+          <label for="itax">Taxa de juros:</label>
+          <input
+            id="itax"
+            type="number"
+            name="tax"
+            size="10"
+            value="0.50"
+            min="0.0"
+            max="100.0"
+            step="any"
+            required
+          />% mês<br />
 
-                    <span class="input-group-addon">$</span>
-                    <label for="ipv">Valor Financiado: </label>
-                    <input
-                        id="ipv"
-                        type="number"
-                        name="pv"
-                        value="1000"
-                        min="0.0"
-                        step="0.01"
-                        class="form-control currency"
-                        required
-                    /><br />
+          <span class="input-group-addon">$</span>
+          <label for="ipv">Valor Financiado: </label>
+          <input
+            id="ipv"
+            type="number"
+            name="pv"
+            value="1000"
+            min="0.0"
+            step="0.01"
+            class="form-control currency"
+            required
+          /><br />
 
-                    <span class="input-group-addon">$</span>
-                    <label for="ipp">Valor Final (opcional):</label>
-                    <input
-                        id="ipp"
-                        type="number"
-                        name="pp"
-                        value="0.0"
-                        min="0.0"
-                        step="0.01"
-                        class="form-control currency"
-                        required
-                    /><br />
+          <span class="input-group-addon">$</span>
+          <label for="ipp">Valor Final (opcional):</label>
+          <input
+            id="ipp"
+            type="number"
+            name="pp"
+            value="0.0"
+            min="0.0"
+            step="0.01"
+            class="form-control currency"
+            required
+          /><br />
 
-                    <span class="input-group-addon">$</span>
-                    <label for="ipb">Valor a Voltar(opcional):</label>
-                    <input
-                        id="ipb"
-                        type="number"
-                        name="pb"
-                        value="0.0"
-                        min="0.0"
-                        step="0.01"
-                        class="form-control currency"
-                        required
-                    /><br />
+          <span class="input-group-addon">$</span>
+          <label for="ipb">Valor a Voltar(opcional):</label>
+          <input
+            id="ipb"
+            type="number"
+            name="pb"
+            value="0.0"
+            min="0.0"
+            step="0.01"
+            class="form-control currency"
+            required
+          /><br />
 
-                    <label for="idp">Entrada?</label>
-                    <input id="idp" type="checkbox" name="dp" value="1" /><br />
-                </div>
-                <div class="messages">
-                    <input
-                        id="submitButton"
-                        class="button"
-                        type="submit"
-                        value="Calcular"
-                    />
-                    <p>(arraste-me para reposicionar a janela)</p>
-                </div>
-            </form>
+          <label for="idp">Entrada?</label>
+          <input id="idp" type="checkbox" name="dp" value="1" /><br />
 
-            <div id="errorMessage" class="messages"></div>
-            <div id="successMessage" class="messages">
-                <p>
-                    Se não souber a taxa de juros coloque 0%, e forneça o valor
-                    final.
-                </p>
-            </div>
-        </fieldset>
+          <label for="imprimir">Imprimir?</label>
+          <input
+            id="imprimir"
+            type="checkbox"
+            name="imprimir"
+            value="1"
+          /><br />
+        </div>
+        <div class="messages">
+          <input
+            id="submitButton"
+            class="button"
+            type="submit"
+            value="Calcular"
+          />
+          <p>(arraste-me para reposicionar a janela)</p>
+        </div>
+      </form>
 
-        <script src="LCG.js"></script>
+      <div id="errorMessage" class="messages"></div>
+      <div id="successMessage" class="messages">
+        <p>
+          Se não souber a taxa de juros coloque 0%, e forneça o valor final.
+        </p>
+      </div>
+    </fieldset>
+    <div
+      class="info-box"
+      id="div1"
+      style="border: 2px solid green; cursor: pointer"
+    >
+      <!-- Conteúdo da Div 1 -->
+      <div class="info-item">
+        <p>Parcelamento: <span id="parcelamento"></span></p>
+      </div>
+      <div class="info-item">
+        <p>
+          Taxa: <span id="taxaMensal"></span>% ao mês =
+          <span id="taxaAnual"></span>% ao ano
+        </p>
+      </div>
+      <div class="info-item">
+        <p>Valor financiado: <span id="valorFinanciado"></span></p>
+        <p>Valor a voltar: <span id="valorVoltar"></span></p>
+        <p>Meses a voltar: <span id="mesesVoltar"></span></p>
+        <p>Entrada: <span id="entrada"></span></p>
+      </div>
+    </div>
 
-        <script type="text/javascript">
-            $("#submitButton").click(function () {
-                var errorMessage = "";
-                if ($("#itax").val() == 0 && $("#ipp").val() == 0) {
-                    errorMessage +=
-                        "<p>Taxa de juros e valor final não podem ser ambos nulos.</p>";
-                }
-                if ($("#itax").val() == 0 && $("#ipv").val() == 0) {
-                    errorMessage +=
-                        "<p>Taxa de juros e valor financiado não podem ser ambos nulos.</p>";
-                }
-                if ($("#ipv").val() == 0 && $("#ipp").val() == 0) {
-                    errorMessage +=
-                        "<p>Valor financiado e valor final não podem ser ambos nulos.</p>";
-                }
-                if (errorMessage != "") {
-                    $("#errorMessage").html(errorMessage);
-                    $("#errorMessage").show();
-                    $("#successMessage").hide();
-                    event.preventDefault();
-                } else {
-                    $("#successMessage").show();
-                    $("#errorMessage").hide();
-                }
-            });
-            dragAndSave("#cdcfieldset"); // $("#cdcfieldset").draggable()
+    <div
+      class="info-box"
+      id="div2"
+      style="border: 2px solid blue; display: none"
+    >
+      <!-- Conteúdo da Div 2 -->
+      <div class="info-item">
+        <p>Prestação: $<span id="prestacao"></span></p>
+      </div>
+      <div class="info-item">
+        <p>
+          Coeficiente de Financiamento:
+          <span id="coeficienteFinanciamento"></span>
+        </p>
+      </div>
+      <div class="info-item">
+        <p>Valor Pago: $<span id="valorPago"></span></p>
+      </div>
+      <div class="info-item">
+        <p>
+          Taxa Real (<span id="interacoes">0</span> interações):
+          <span id="taxaReal"></span>% ao mês
+        </p>
+      </div>
+      <div class="info-item">
+        <p>Valor Corrigido: $<span id="valorCorrigido"></span></p>
+      </div>
+    </div>
 
-            webshims.setOptions("forms-ext", {
-                replaceUI: "auto",
-                types: "number",
-            });
-            webshims.polyfill("forms forms-ext");
-            
-        </script>
-        <script src="functions.js"></script>
-        <script src="click.js"></script>
-        <script src="test.js"></script>
-    </body>
+    <!-- Botão exibe/oculta os resultados da tabela price -->
+    <button id="toggleButton" style="display: none">
+      Exibe/Oculta a tabela price
+    </button>
+    <div id="conteudo" style="display: none">
+      <!-- tabela HTML -->
+      <table id="resultTable" style="width: 100%">
+        <thead>
+          <tr>
+            <th>Mês</th>
+            <th class="money">Prestação</th>
+            <th class="money">Juros</th>
+            <th class="money">Amortização</th>
+            <th class="money">Saldo Devedor</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    <script type="text/javascript">
+      $("#submitButton").click(function () {
+        var errorMessage = "";
+        if ($("#itax").val() == 0 && $("#ipp").val() == 0) {
+          errorMessage +=
+            "<p>Taxa de juros e valor final não podem ser ambos nulos.</p>";
+        }
+        if ($("#itax").val() == 0 && $("#ipv").val() == 0) {
+          errorMessage +=
+            "<p>Taxa de juros e valor financiado não podem ser ambos nulos.</p>";
+        }
+        if ($("#ipv").val() == 0 && $("#ipp").val() == 0) {
+          errorMessage +=
+            "<p>Valor financiado e valor final não podem ser ambos nulos.</p>";
+        }
+        if (errorMessage != "") {
+          $("#errorMessage").html(errorMessage);
+          $("#errorMessage").show();
+          $("#successMessage").hide();
+          event.preventDefault();
+        } else {
+          $("#successMessage").show();
+          $("#errorMessage").hide();
+        }
+        // Impedir o envio do formulário padrão
+        event.preventDefault();
+
+        // Obter os valores de entrada do usuário
+        var np = parseInt($("#parc").val());
+        var tax = parseFloat($("#itax").val());
+        var pv = parseFloat($("#ipv").val());
+        var pp = parseFloat($("#ipp").val());
+        var pb = parseFloat($("#ipb").val());
+        var mesesVoltar = parseInt($("#mesesVoltarInput").val());
+
+        // Verifique se os valores são maiores ou iguais a zero
+        if (
+          np < 0 ||
+          tax < 0 ||
+          pv < 0 ||
+          pp < 0 ||
+          pb < 0 ||
+          mesesVoltar < 0
+        ) {
+          $("#errorMessage").html(
+            "<p>Por favor, preencha os campos com valores maiores ou iguais a zero.</p>"
+          );
+          $("#errorMessage").show();
+          $("#successMessage").hide();
+          $("#cdcfieldset").show();
+          $("#div1").hide();
+          $("#div2").hide();
+          $("#toggleButton").hide();
+          $("#conteudo").hide();
+        } else {
+          // np = meses (sem 1 mes se tiver entrada),
+          // tax = 30,42,
+          // pv = valor financiado
+          // pp valor pago 1095.19
+          // pb
+          console.log(
+            "np" + np,
+            "tax" + tax,
+            "pv" + pv,
+            "pp" + pp,
+            "pb" + pb,
+            "mesesvoltar" + mesesVoltar
+          );
+
+          // Calcula o valor total pago com base nas variáveis
+          var valorTotalPago = pv + pp + pb;
+
+          // Execute a função de cálculo
+          calcular();
+
+          // Verifique se o checkbox "imprimir" está marcado
+          var imprimir = $("#imprimir").is(":checked");
+
+          if (imprimir) {
+            window.print();
+          }
+        }
+      });
+      dragAndSave("#cdcfieldset"); // $("#cdcfieldset").draggable()
+
+      webshims.setOptions("forms-ext", {
+        replaceUI: "auto",
+        types: "number",
+      });
+      webshims.polyfill("forms forms-ext");
+    </script>
+      <script type="text/javascript">
+        // Função para salvar os valores no Local Storage
+        function saveToLocalStorage() {
+            var np = $("#parc").val();
+            var tax = $("#itax").val();
+            var pv = $("#ipv").val();
+            var pp = $("#ipp").val();
+            var pb = $("#ipb").val();
+            var dp = $("#idp").is(":checked");
+            var imprimir = $("#imprimir").is(":checked");
+
+            // Crie um objeto para armazenar os valores
+            var data = {
+                np: np,
+                tax: tax,
+                pv: pv,
+                pp: pp,
+                pb: pb,
+                dp: dp,
+                imprimir: imprimir
+            };
+
+            // Converta o objeto em uma string JSON
+            var jsonData = JSON.stringify(data);
+
+            // Salve a string JSON no Local Storage
+            localStorage.setItem('cdcData', jsonData);
+        }
+
+        // Função para carregar os valores do Local Storage
+        function loadFromLocalStorage() {
+            var jsonData = localStorage.getItem('cdcData');
+
+            if (jsonData) {
+                var data = JSON.parse(jsonData);
+
+                $("#parc").val(data.np);
+                $("#itax").val(data.tax);
+                $("#ipv").val(data.pv);
+                $("#ipp").val(data.pp);
+                $("#ipb").val(data.pb);
+                $("#idp").prop("checked", data.dp);
+                $("#imprimir").prop("checked", data.imprimir);
+            }
+        }
+
+
+        // Função para calcular e mostrar as divs e a tabela
+        function calcular() {
+            saveToLocalStorage();
+            $("#cdcfieldset").hide();
+            $("#div1").show();
+            $("#div2").show();
+            $("#toggleButton").show();
+            $("#conteudo").show();
+        }
+
+        // Ao carregar a página, verifique se há dados salvos no Local Storage e carregue-os
+        $(document).ready(function () {
+            loadFromLocalStorage();
+            $("#cdcfieldset").show();
+            $("#div1").hide();
+            $("#div2").hide();
+            $("#toggleButton").hide();
+            $("#conteudo").hide();
+        });
+
+        // ouvinte de evento para calcular
+        $("#submitButton").click(function () {
+            calcular();
+
+        });
+
+        // ouvinte de evento para mostrar o formulário novamente
+        $("#showFormButton").click(function () {
+            $("#cdcfieldset").show();
+            $("#div1").hide();
+            $("#div2").hide();
+            $("#toggleButton").hide();
+            $("#conteudo").hide();
+        });
+
+        // ouvinte de evento para clicar na div1
+        $("#div1").click(function () {
+            $("#cdcfieldset").show();
+            $("#div1").hide();
+            $("#div2").hide();
+            $("#toggleButton").hide();
+            $("#conteudo").hide();
+        });
+    </script>
+    <script src="formulas.js"></script>
+    <script src="click.js"></script>
+  
+  </body>
 </html>
