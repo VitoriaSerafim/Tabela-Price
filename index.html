@@ -86,6 +86,31 @@
       .messages {
         text-align: center;
       }
+      .priceTable{
+        width: 50vw;
+        margin-left: 25vw;
+        background-color: #ffaf5f;
+        border-radius: 5px;
+        padding: 15px;
+        font-family: monospace;
+        box-shadow: #b1b1b1;
+        text-align: center;
+        font-size: 18px;
+        float: left;
+      }
+      .tHead{
+        background-color: #fa9835;
+      }
+      .info-box{
+        width: 35vw;
+        max-width: 375px;
+        background-color: #ffe2d5;
+        border-radius: 5px;
+        padding: 10px;
+        font-family: monospace;
+        font-size: 18px;
+        text-align: center;
+      }
     </style>
   </head>
 
@@ -207,9 +232,9 @@
     <div
       class="info-box"
       id="div1"
-      style="border: 2px solid green; cursor: pointer"
+      style="border: 2px solid rgb(4, 89, 4); cursor: pointer; float:left; margin-right: 25px; margin-left: 20vw;"
     >
-      <!-- Conteúdo da Div 1 -->
+      
       <div class="info-item">
         <p>Parcelamento: <span id="parcelamento"></span></p>
       </div>
@@ -230,7 +255,7 @@
     <div
       class="info-box"
       id="div2"
-      style="border: 2px solid blue; display: none"
+      style="border: 2px solid rgb(6, 6, 224); display: none; float: left;"
     >
       <!-- Conteúdo da Div 2 -->
       <div class="info-item">
@@ -256,14 +281,10 @@
       </div>
     </div>
 
-    <!-- Botão exibe/oculta os resultados da tabela price -->
-    <button id="toggleButton" style="display: none">
-      Exibe/Oculta a tabela price
-    </button>
-    <div id="conteudo" style="display: none">
+    <div id="result" style="display: none">
       <!-- tabela HTML -->
-      <table id="resultTable" style="width: 100%">
-        <thead>
+      <table id="resultTable" class="priceTable">
+        <thead class="tHead">
           <tr>
             <th>Mês</th>
             <th class="money">Prestação</th>
@@ -359,7 +380,7 @@
         }
       });
       dragAndSave("#cdcfieldset"); // $("#cdcfieldset").draggable()
-
+      dragAndSave("#result")
       webshims.setOptions("forms-ext", {
         replaceUI: "auto",
         types: "number",
@@ -440,25 +461,15 @@
         });
 
         // ouvinte de evento para mostrar o formulário novamente
-        $("#showFormButton").click(function () {
+        $("#resultTable").click(function () {
             $("#cdcfieldset").show();
             $("#div1").hide();
             $("#div2").hide();
-            $("#toggleButton").hide();
-            $("#conteudo").hide();
-        });
-
-        // ouvinte de evento para clicar na div1
-        $("#div1").click(function () {
-            $("#cdcfieldset").show();
-            $("#div1").hide();
-            $("#div2").hide();
-            $("#toggleButton").hide();
-            $("#conteudo").hide();
+            $("#result").hide();
         });
     </script>
-    <script src="formulas.js"></script>
-    <script src="click.js"></script>
+    <script src="functions.js"></script>
+    <script src="butonClick.js"></script>
   
   </body>
 </html>
