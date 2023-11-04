@@ -1,6 +1,6 @@
 function calcularTaxa(valorPrazo, valorVista, numPrestacoes) {
     // Inicializa a taxa estimada (t0) como o preço a prazo dividido pelo preço à vista
-    let taxaEstimada = valorPrazo / valorVista;
+    let taxAproximada = valorPrazo / valorVista;
     // Define a precisão desejada para a taxa
     const precisao = 1e-4;
     let diferenca = 1;
@@ -9,27 +9,26 @@ function calcularTaxa(valorPrazo, valorVista, numPrestacoes) {
     // Loop do método de Newton para ajustar a taxa estimada
     while (diferenca > precisao) {
         // Calcula 'a' e 'b' com base na taxa estimada atual
-        let a = Math.pow(1 + taxaEstimada, -numPrestacoes);
-        let b = Math.pow(1 + taxaEstimada, -(numPrestacoes + 1));
+        let a = Math.pow(1 + taxAproximada, -numPrestacoes);
+        let b = Math.pow(1 + taxAproximada, -(numPrestacoes + 1));
         // Calcula f(t) e f'(t)
-        let f_t = valorVista * taxaEstimada - (valorPrazo / numPrestacoes) * (1 - a);
+        let f_t = valorVista * taxAproximada - (valorPrazo / numPrestacoes) * (1 - a);
         let f_prime_t = valorVista - valorPrazo * b;
         // Atualiza a taxa estimada
-        let novaTaxa = taxaEstimada - f_t / f_prime_t;
+        let novaTaxa = taxAproximada - f_t / f_prime_t;
         // Calcula a diferença entre a nova e a antiga taxa estimada
-        diferenca = Math.abs(novaTaxa - taxaEstimada);
-        taxaEstimada = novaTaxa;
+        diferenca = Math.abs(novaTaxa - taxAproximada);
+        taxAproximada = novaTaxa;
         cont += 1; 
     }
-    console.log(taxaEstimada)
+    console.log(taxAproximada)
     // Retorna a taxa estimada com a precisão desejada
-    return [taxaEstimada*100, cont];
+    return [taxAproximada*100, cont];
 }
 
 function CF(t, p) {
     return t /(1 - Math.pow(1 + p, -p));
   }
-  
 
 function getInterest(pp, pv, np) {
     var t2 = x / y;

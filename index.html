@@ -403,7 +403,7 @@
       }
 
       // Função para calcular e mostrar as divs e a tabela
-      function calcular() {
+      function HandleButton() {
         saveToLocalStorage();
         $("#cdcfieldset").hide();
         $("#resultTable").show();
@@ -477,19 +477,9 @@
             $("#toggleButton").hide();
             $("#resultTable").hide();
           } else {
-            console.log(
-              "np" + np,
-              "tax" + tax,
-              "pv" + pv,
-              "pp" + pp,
-              "pb" + pb,
-              "mesesvoltar" + mesesVoltar
-            );
-
-            // Calcula o valor total pago com base nas variáveis
-            var valorTotalPago = pv + pp + pb;
-            // Execute a função de cálculo
-            calcular();
+            // Função que calcula a tabela
+            HandleButton();
+            
             // Verifique se o checkbox "imprimir" está marcado
             var imprimir = $("#imprimir").is(":checked");
             if (imprimir) {
